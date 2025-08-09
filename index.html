@@ -3,56 +3,97 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Temporizador para la fiesta</title>
+<title>Temporizador Fiesta - Reloj LED Rosa</title>
 <style>
   body {
-    background: #ea9999;
-    color: #fff;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #ffe4e6;
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
     margin: 0;
+    font-family: 'Courier New', Courier, monospace;
+    color: #d6336c;
   }
   .temporizador {
-    background: rgba(0,0,0,0.4);
-    padding: 30px 40px;
-    border-radius: 15px;
+    background: #fff0f6;
+    padding: 40px 50px;
+    border-radius: 20px;
+    box-shadow:
+      0 0 20px #ff4d94,
+      0 0 30px #d6336c;
     text-align: center;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+    max-width: 380px;
+    width: 90%;
   }
   h1 {
-    margin-bottom: 20px;
-    font-size: 26px;
-    text-shadow: 0 0 8px #fff3f3;
+    margin-bottom: 30px;
+    font-weight: 900;
+    font-size: 28px;
+    color: #b3204a;
+    text-shadow:
+      0 0 10px #ff9aba;
   }
   #cuentaRegresiva {
-    font-size: 36px;
-    font-weight: bold;
-    letter-spacing: 2px;
+    display: flex;
+    justify-content: center;
+    gap: 18px;
+    font-size: 60px;
+    font-weight: 900;
+    letter-spacing: 5px;
+    text-shadow:
+      0 0 8px #ff4d94,
+      0 0 12px #d6336c,
+      0 0 20px #d6336c;
+  }
+  #cuentaRegresiva span {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  #cuentaRegresiva span small {
+    font-size: 20px;
+    font-weight: 600;
+    margin-top: 6px;
+    color: #b3204a;
+    text-shadow: none;
+  }
+
+  @media (max-width: 400px) {
+    #cuentaRegresiva {
+      font-size: 40px;
+      gap: 10px;
+    }
+    #cuentaRegresiva span small {
+      font-size: 14px;
+    }
   }
 </style>
 </head>
 <body>
-
-<div class="temporizador" role="timer" aria-live="polite" aria-atomic="true">
-  <h1>⏳ Tiempo para la fiesta</h1>
-  <div id="cuentaRegresiva">Cargando...</div>
-</div>
+  <div class="temporizador" role="timer" aria-live="polite" aria-atomic="true">
+    <h1>⏳ Cuenta regresiva para la fiesta</h1>
+    <div id="cuentaRegresiva">
+      <span><span id="dias">00</span><small>días</small></span>
+      <span><span id="horas">00</span><small>horas</small></span>
+      <span><span id="minutos">00</span><small>minutos</small></span>
+      <span><span id="segundos">00</span><small>segundos</small></span>
+    </div>
+  </div>
 
 <script>
-  // Fecha objetivo: 21 Septiembre 2025, 15:30 (3:30 pm)
   const fechaFiesta = new Date('2025-09-21T15:30:00');
-
-  const cuentaRegresivaEl = document.getElementById('cuentaRegresiva');
+  const diasEl = document.getElementById('dias');
+  const horasEl = document.getElementById('horas');
+  const minutosEl = document.getElementById('minutos');
+  const segundosEl = document.getElementById('segundos');
 
   function actualizarTemporizador() {
     const ahora = new Date();
     const diferencia = fechaFiesta - ahora;
 
     if (diferencia <= 0) {
-      cuentaRegresivaEl.textContent = "¡La fiesta ha comenzado! 🎉";
+      document.querySelector('.temporizador').innerHTML = "<h1>¡La fiesta ha comenzado! 🎉</h1>";
       clearInterval(intervalo);
       return;
     }
@@ -62,13 +103,14 @@
     const minutos = Math.floor((diferencia % (1000 * 60 * 60)) / (1000 * 60));
     const segundos = Math.floor((diferencia % (1000 * 60)) / 1000);
 
-    cuentaRegresivaEl.textContent =
-      `${dias}d ${horas}h ${minutos}m ${segundos}s`;
+    diasEl.textContent = dias.toString().padStart(2, '0');
+    horasEl.textContent = horas.toString().padStart(2, '0');
+    minutosEl.textContent = minutos.toString().padStart(2, '0');
+    segundosEl.textContent = segundos.toString().padStart(2, '0');
   }
 
-  actualizarTemporizador(); // actualizar al cargar
+  actualizarTemporizador();
   const intervalo = setInterval(actualizarTemporizador, 1000);
 </script>
-
 </body>
 </html>
