@@ -3,42 +3,47 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Temporizador Fiesta Redondo Minimalista</title>
+<title>Temporizador Fiesta Transparente</title>
 <style>
   body {
-    background: #ffe4e6;
+    background: transparent;
+    margin: 0;
+    height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
-    margin: 0;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     color: #b33951;
   }
   .temporizador {
-    background: #fff0f6;
+    background: transparent;
     width: 320px;
     height: 320px;
     border-radius: 50%;
-    box-shadow:
-      0 8px 20px rgba(179, 57, 81, 0.25);
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     text-align: center;
     padding: 30px;
+    user-select: none;
   }
   h1 {
-    margin: 0 0 20px 0;
+    margin: 0 0 12px 0;
     font-weight: 700;
     font-size: 22px;
+    color: #9e2a47;
+  }
+  p {
+    margin: 0 0 25px 0;
+    font-size: 16px;
+    font-weight: 500;
     color: #9e2a47;
   }
   #cuentaRegresiva {
     display: flex;
     justify-content: center;
-    gap: 15px;
+    gap: 25px;
     font-size: 48px;
     font-weight: 700;
     letter-spacing: 4px;
@@ -56,7 +61,6 @@
     margin-top: 6px;
     color: #9e2a47;
   }
-
   @media (max-width: 400px) {
     .temporizador {
       width: 260px;
@@ -65,10 +69,13 @@
     }
     #cuentaRegresiva {
       font-size: 36px;
-      gap: 10px;
+      gap: 15px;
     }
     #cuentaRegresiva span small {
       font-size: 12px;
+    }
+    p {
+      font-size: 14px;
     }
   }
 </style>
@@ -76,21 +83,21 @@
 <body>
 
 <div class="temporizador" role="timer" aria-live="polite" aria-atomic="true">
-  <h1>⏳ Cuenta regresiva</h1>
+  <h1>¡Una princesa está por celebrar su día!</h1>
+  <p>Te invitamos al mágico cumpleaños de nuestra pequeña</p>
   <div id="cuentaRegresiva">
     <span><span id="dias">00</span><small>días</small></span>
     <span><span id="horas">00</span><small>horas</small></span>
     <span><span id="minutos">00</span><small>minutos</small></span>
-    <span><span id="segundos">00</span><small>segundos</small></span>
   </div>
 </div>
 
 <script>
+  // Fecha fija 21 Septiembre 2025 a las 15:30
   const fechaFiesta = new Date('2025-09-21T15:30:00');
   const diasEl = document.getElementById('dias');
   const horasEl = document.getElementById('horas');
   const minutosEl = document.getElementById('minutos');
-  const segundosEl = document.getElementById('segundos');
 
   function actualizarTemporizador() {
     const ahora = new Date();
@@ -105,12 +112,10 @@
     const dias = Math.floor(diferencia / (1000 * 60 * 60 * 24));
     const horas = Math.floor((diferencia % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
     const minutos = Math.floor((diferencia % (1000 * 60 * 60)) / (1000 * 60));
-    const segundos = Math.floor((diferencia % (1000 * 60)) / 1000);
 
     diasEl.textContent = dias.toString().padStart(2, '0');
     horasEl.textContent = horas.toString().padStart(2, '0');
     minutosEl.textContent = minutos.toString().padStart(2, '0');
-    segundosEl.textContent = segundos.toString().padStart(2, '0');
   }
 
   actualizarTemporizador();
