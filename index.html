@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Temporizador para la fiesta</title>
+<style>
+  body {
+    background: #ea9999;
+    color: #fff;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+  }
+  .temporizador {
+    background: rgba(0,0,0,0.4);
+    padding: 30px 40px;
+    border-radius: 15px;
+    text-align: center;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+  }
+  h1 {
+    margin-bottom: 20px;
+    font-size: 26px;
+    text-shadow: 0 0 8px #fff3f3;
+  }
+  #cuentaRegresiva {
+    font-size: 36px;
+    font-weight: bold;
+    letter-spacing: 2px;
+  }
+</style>
+</head>
+<body>
+
+<div class="temporizador" role="timer" aria-live="polite" aria-atomic="true">
+  <h1>⏳ Tiempo para la fiesta</h1>
+  <div id="cuentaRegresiva">Cargando...</div>
+</div>
+
+<script>
+  // Fecha objetivo: 21 Septiembre 2025, 15:30 (3:30 pm)
+  const fechaFiesta = new Date('2025-09-21T15:30:00');
+
+  const cuentaRegresivaEl = document.getElementById('cuentaRegresiva');
+
+  function actualizarTemporizador() {
+    const ahora = new Date();
+    const diferencia = fechaFiesta - ahora;
+
+    if (diferencia <= 0) {
+      cuentaRegresivaEl.textContent = "¡La fiesta ha comenzado! 🎉";
+      clearInterval(intervalo);
+      return;
+    }
+
+    const dias = Math.floor(diferencia / (1000 * 60 * 60 * 24));
+    const horas = Math.floor((diferencia % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const minutos = Math.floor((diferencia % (1000 * 60 * 60)) / (1000 * 60));
+    const segundos = Math.floor((diferencia % (1000 * 60)) / 1000);
+
+    cuentaRegresivaEl.textContent =
+      `${dias}d ${horas}h ${minutos}m ${segundos}s`;
+  }
+
+  actualizarTemporizador(); // actualizar al cargar
+  const intervalo = setInterval(actualizarTemporizador, 1000);
+</script>
+
+</body>
+</html>
